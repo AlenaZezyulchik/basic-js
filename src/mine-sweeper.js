@@ -24,14 +24,36 @@ const { NotImplementedError } = require('../extensions/index.js');
  * ]
  */
 function minesweeper(matrix) {
+    let y = matrix.length;
+    let x = matrix[0].length;
+    let result = Array.from(Array(y), () => new Array(x));
 
-    let resultSumMatrix = 0;
-    for (let i = 0; i < matrix[0].length; i++) {
-        for (let j = 0; j < matrix.length && matrix[j][i] !== 0; j++) {
-            resultSumMatrix = resultSumMatrix + matrix[j][i];
+    for (let i = 0; i < y; i++) {
+        for (let j = 0; j < x; j++) {
+
+            let sum = 0;
+
+            if (matrix[i][j - 1] === true) sum += 1;
+            if (matrix[i][j + 1] === true) sum += 1;
+
+            if (i > 0) {
+                if (matrix[i - 1][j - 1] === true) sum += 1;
+                if (matrix[i - 1][j] === true) sum += 1;
+                if (matrix[i - 1][j + 1] === true) sum += 1;
+            }
+
+            if (i < y - 1) {
+                if (matrix[i + 1][j - 1] === true) sum += 1;
+                if (matrix[i + 1][j] === true) sum += 1;
+                if (matrix[i + 1][j + 1] === true) sum += 1;
+            }
+
+            result[i][j] = sum;
+
         }
     }
-    return resultSumMatrix;
+
+    return result;
 }
 
 module.exports = {
